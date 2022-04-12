@@ -1,3 +1,5 @@
+import http from "http";
+import WebSocket from "ws";
 import express from "express";
 import { handle } from "express/lib/application";
 
@@ -10,4 +12,18 @@ app.get("/", (req, res) => res.render("home"));
 app.get("/*", (req, res) => res.redirect("/"));
 
 const handleListen = () => console.log(`Listening on http://localhost:3000`);
-app.listen(3000, handleListen);
+// app.listen(3000, handleListen);
+
+const server = http.createServer(app); //http 서버
+const wss = new WebSocket.Server({ server }); //websocket 서버
+
+wss.on("connection", (socket) => {
+  console.log("Connected to Browser ✅");
+  socket.on("close", () => console.log("Disconnected from Browser ❌"));
+  socket.on("message", (message) => {
+    console.log(message.toString("utf8"));
+  });
+  socket.send("안녕하세요");
+});
+
+server.listen(3000, handleListen);
