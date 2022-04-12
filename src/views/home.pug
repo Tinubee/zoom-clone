@@ -13,12 +13,17 @@ html(lang="en")
         main
             div#welcome
                 form
-                    input(placeholder="room name", require  ,type="text")
+                    input#input_nickname(placeholder="input nickname", type="text")
+                    input#input_roomname(placeholder="room name", require  ,type="text")
                     button Enter Room  
             div#room
+                span 
                 h3 
-                ul 
-                form
+                ul
+                form#name
+                    input(placeholder="input change nickname", type="text")
+                    button Change Name  
+                form#msg
                     input(placeholder="write message", require  ,type="text")
                     button Send 
         script(src="/socket.io/socket.io.js")
